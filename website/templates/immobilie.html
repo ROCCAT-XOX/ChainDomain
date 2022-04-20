@@ -1,0 +1,27 @@
+{{ from flask_session import Session}}
+{% extends "base.html" %} {% block title %}Chain deine Domain{% endblock %} {% block content
+    %}
+
+{{ immobilienID =1, sellerID=2, VerfügbareAnteile=4999, preis=500 }}
+<!--{{session['immobilienID']=immobilienID}}
+    {{sellTokens = url_for('auth.getUserTokens')}}-->
+<form action = "{{ url_for('auth.angebotBuy') }}" method = "POST" name="buy" id="buy" enctype=multipart/form-data>
+    {{session['immobilienID']=immobilienID,
+    session['sellerID']=sellerID,
+    session['preis']=preis}}
+    <label for="auswählen">Wählen Sie die Anzahl der Tokens aus, die Sie kaufen möchten</label>
+    <input type="number" name="auswählen" id="auswählen" min="1" max="{{VerfügbareAnteile}}">
+    <label for="buy">Buy</label>
+    <button type="submit"></button>
+</form>
+
+<form action = "{{ url_for('auth.angebotSell') }}" method = "POST" name="sell" id="sell" enctype=multipart/form-data>
+    {{session['immobilienID']=immobilienID,
+    session['sellerID']=sellerID,
+    session['preis']=preis}}
+    <label for="auswählen">Wählen Sie die Anzahl der Tokens aus, die Sie verkaufen möchten</label>
+    <input type="number" name="auswählen" id="auswählen" min="1" max="{{VerfügbareAnteile}}">
+    <label for="buy">Sell</label>
+    <button type="submit"></button>
+</form>
+{% endblock %}

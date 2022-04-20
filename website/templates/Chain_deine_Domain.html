@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block title %}Chain deine Domain{% endblock %} {% block content
+    %}
+<h3>Hier können Sie Ihre Immobilie tokenisieren</h3>
+<form action = "{{ url_for('auth.immobilieAnlegen') }}" method = "POST" name="tokenisieren" id="tokenisieren" enctype="multipart/form-data">
+    <label for="straße">Straße</label><br>
+    <input type="text" id="straße" name="straße" required><br>
+    <label for="hausnummer">Hausnummer</label><br>
+    <input type="text" id="hausnummer" name="hausnummer" required><br>
+    <label for="ort">Ort</label><br>
+    <input type="text" id="ort" name="ort" required><br>
+    <label for="plz">Postleitzahl</label><br>
+    <input type="number" id="plz" name="plz" required><br>
+    <label for="beschreibung">Beschreibung Ihrer Immobilie</label><br>
+    <textarea name="beschreibung" id="beschreibung" cols="50" rows="10" form="tokenisieren" required></textarea><br>
+    <label for="preis">Wert ihrer Immobilie</label><br>
+    <input type="number" id="preis" name="preis" step="1" min="10000" required><br>
+    <label for="prozentanteil">Sie können 0,001-49,99% Ihrer Tokens auf dem Markt platzieren</label><br>
+    <input type="number" id="prozentanteil" name="prozentanteil" step="1" min="1" max="4999" required>Anzahl der Tokens, die Sie verkaufen möchten <br>
+    <label for="img">Laden Sie ein Bild Ihrer Immobilie hoch</label><br>
+    <input type="file" id="img" name="img" accept="image/*" required/>
+    <button type="submit" name="submit">Immobilie tokenisieren</button>
+    <!--codeAddress(this.form)-->
+</form>
+{% endblock %}
