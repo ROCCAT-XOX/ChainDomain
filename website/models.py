@@ -29,7 +29,7 @@ class Offer(db.Model):
     
 class Property(db.Model):
     propertyID  	    = db.Column(db.Integer,     primary_key=True)
-    sellerID            = db.Column(db.Integer, unique = True)
+    sellerID            = db.Column(db.Integer, unique = False)
     straße              = db.Column(db.String(120))
     hausnummer          = db.Column(db.String(12))
     ort                 = db.Column(db.String(120))
