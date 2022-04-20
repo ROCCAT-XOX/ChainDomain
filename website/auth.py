@@ -71,14 +71,25 @@ def sign_up():
         elif len(password1) < 7:
             flash('Password must be at least 7 characters.', category='error')
         else:
+            #con = sqlite3.connect('chaindomain.db')
             new_user = User(email=email, first_name=first_name, password=generate_password_hash(
                 password1, method='sha256'))
+            
             db.session.add(new_user)
             db.session.commit()
+            #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+            #db_path = os.path.join(BASE_DIR, "chaindomain.db")
+            #with sqlite3.connect(db_path) as db:
+            #cur = db.cursor()
+            #hashPassword = generate_password_hash(password1, method='sha256')
+            #cur.execute("INSERT INTO User (email, password, first_name) VALUES (?,?,?)",
+            #    (email,first_name,hashPassword))
+            #cur.commit()
+            
+            #cur.close()
             login_user(new_user, remember=True)
             flash('Account created!', category='success')
             return redirect(url_for('views.home'))
-
     return render_template("sign_up.html", user=current_user)
 
 #def get_db_connection():
@@ -107,56 +118,80 @@ def sign_up():
 #@login_required
 def immobilieAnlegen():
     if request.method == 'POST':
-        SellerID = 'Marius'#current_user.userID
+        SellerID = 1 #current_user.userID
         Straße = request.form.get('straße')
         Hausnummer = request.form.get('hausnummer')
         Ort = request.form.get('ort')
         PLZ = request.form.get('plz')
         Beschreibung = request.form.get('beschreibung')
-        Preis = int(request.form.get('preis'))
+        Gesamtwert= int(request.form.get('preis'))
         AnzahlTokens = 10000
-        Preis = Preis/AnzahlTokens
+        Preis = float(Gesamtwert/AnzahlTokens)
         VerfügbareAnteile = int(request.form.get('prozentanteil'))
         img = request.files['img']
         filename = secure_filename(img.filename)
+
         #directory = '%s'%os.getcwd
-        UPLOAD_FOLDER = "C:/Users/mariu/OneDrive/Dokumente/DHBW/Semester6/Projektkonzeption/Test/Flask-Web-App-Tutorial/website/static/images"
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        UPLOAD_FOLDER = os.path.join(BASE_DIR, "static/images")
+        #= "C:/Users/mariu/OneDrive/Dokumente/DHBW/Semester6/Projektkonzeption/Test/Flask-Web-App-Tutorial/website/static/images"
         img.save(os.path.join(UPLOAD_FOLDER, filename))
-        new_property = Property(sellerID=SellerID,straße=Straße,hausnummer=Hausnummer,ort=Ort,plz=PLZ,beschreibung=Beschreibung,preis=Preis,anzahlTokens=AnzahlTokens,verfügbareAnteile=VerfügbareAnteile,img=filename)
-        db.session.add(new_property)
-        db.session.commit()      
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        db_path = os.path.join(BASE_DIR, "chaindomain.db")
+        con = sqlite3.connect(db_path)
+        cursor= con.cursor()
+        #new_property = Property(sellerID=SellerID,straße=Straße,hausnummer=Hausnummer,ort=Ort,plz=PLZ,beschreibung=Beschreibung,preis=Preis,anzahlTokens=AnzahlTokens,verfügbareAnteile=VerfügbareAnteile,img=filename)
+        #db.session.add(new_property)
+        #db.session.commit()      
         #cursor = get_db_connection()
-        #cursor.execute('''INSERT INTO Property (sellerID,straße,hausnummer,ort,plz,beschreibung,preis,anzahlTokens,verfügbareAnteile,img) VALUES (?,?,?,?,?,?,?,?,?,?)''',
-        #    (SellerID,Straße,Hausnummer,Ort,PLZ,Beschreibung,Preis,AnzahlTokens,VerfügbareAnteile,filename))
-        immobilienID = 1 #cursor.lastrowid
-        #cursor.commit
+        cursor.execute("INSERT INTO Property (sellerID,straße,hausnummer,ort,plz,beschreibung,preis,anzahlTokens,verfügbareAnteile,img) VALUES (?,?,?,?,?,?,?,?,?,?)",
+            (SellerID,Straße,Hausnummer,Ort,PLZ,Beschreibung,Preis,AnzahlTokens,VerfügbareAnteile,filename))
+        con.commit()
+        immobilienID = cursor.lastrowid
+        con.close()
+
         besitzerTokens = AnzahlTokens-VerfügbareAnteile
         initialTransaction(SellerID,immobilienID,besitzerTokens,Preis)#Tokens des Besitzers
         initialOffer(SellerID,immobilienID,VerfügbareAnteile,Preis)#Tokens, die verkauft werden sollen
-        flash('Immobilie wurde gechained - momentan zu verkaufende Tokens:'+VerfügbareAnteile, category='success')
+        zuverkaufendeTokens = str(VerfügbareAnteile)
+        flash('Immobilie wurde gechained - momentan zu verkaufende Tokens:'+zuverkaufendeTokens, category='success')
 
-    return render_template("home.html")#, user=current_user)
+    return render_template("home.html", user=current_user)
 
 def initialTransaction(sellerID,immobilienID,AnzahlTokens,Preis):
     # dd/mm/YY H:M:S
     dt_string = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
-    BuyerID = null
-    conn = sqlite3.connect('chaindomain.db')
-    cursor=conn.cursor()
-    cursor.execute('''INSERT INTO Transaction (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)''',
-            (sellerID,BuyerID,immobilienID,AnzahlTokens,Preis,dt_string))
-    cursor.commit
+    BuyerID = 0
+    new_transaction = Transaction(sellerID=sellerID,buyerID=BuyerID,propertyID=immobilienID,anzahlTokens=AnzahlTokens,preisToken=Preis,datum=dt_string)
+    db.session.add(new_transaction)
+    db.session.commit() 
+
+    #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    #db_path = os.path.join(BASE_DIR, "chaindomain.db")
+    #con = sqlite3.connect(db_path)
+    #cursor= con.cursor()
+    #cursor.execute("INSERT INTO Transaction (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)",
+    #        (sellerID,BuyerID,immobilienID,AnzahlTokens,Preis,dt_string))
+    #con.commit
+    #con.close()
     return
 
 
 def initialOffer(sellerID,immobilienID,AnzahlTokens,preis):
     dt_string = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
-    conn = sqlite3.connect('chaindomain.db')
-    cursor=conn.cursor()
-    BuyerID = null
-    cursor.execute('''INSERT INTO Offer (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)''',
-            (sellerID,BuyerID,immobilienID,AnzahlTokens,preis,dt_string))
-    cursor.commit
+    BuyerID = 0
+    new_offer = Offer(sellerID=sellerID,buyerID=BuyerID,propertyID=immobilienID,anzahlTokens=AnzahlTokens,preisToken=preis,datum=dt_string)
+    db.session.add(new_offer)
+    db.session.commit()
+    #BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    #db_path = os.path.join(BASE_DIR, "chaindomain.db")
+    #con = sqlite3.connect(db_path)
+    #cursor= con.cursor()
+    #BuyerID = null
+    #cursor.execute("INSERT INTO Offer (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)",
+    #        (sellerID,BuyerID,immobilienID,AnzahlTokens,preis,dt_string))
+    #con.commit
+    #con.close()
     return
 
 #@auth.route('/getUserTokens', methods=['GET', 'POST'])
@@ -176,11 +211,14 @@ def buyOffer():
         # dd/mm/YY H:M:S
         dt_string = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
         BuyerID = '5'#current_user.id
-        conn = sqlite3.connect('chaindomain.db')
-        cursor=conn.cursor()
-        cursor.execute('''INSERT INTO Offer (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)''',
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        db_path = os.path.join(BASE_DIR, "chaindomain.db")
+        con = sqlite3.connect(db_path)
+        cursor= con.cursor()
+        cursor.execute("INSERT INTO Offer (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)",
             (sellerID,BuyerID,immobilienID,AnzahlTokens,preis,dt_string))
         cursor.commit
+        cursor.close()
         flash('Angebot wurde erstellt', category='success')
     return render_template("immobilie.html")
 
@@ -196,22 +234,28 @@ def sellOffer():
         # dd/mm/YY H:M:S
         dt_string = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
         BuyerID = null#da verkauft werden soll
-        conn = sqlite3.connect('chaindomain.db')
-        cursor=conn.cursor()
-        cursor.execute('''INSERT INTO Offer (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)''',
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        db_path = os.path.join(BASE_DIR, "chaindomain.db")
+        con = sqlite3.connect(db_path)
+        cursor= con.cursor()
+        cursor.execute("INSERT INTO Offer (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)",
             (sellerID,BuyerID,immobilienID,AnzahlTokens,preis,dt_string))
         cursor.commit
+        cursor.close()
         flash('Angebot wurde erstellt', category='success')
     return render_template("immobilie.html")
 
 def transaction(sellerID,buyerID,immobilienID,anzahlTokens,preis):
     # dd/mm/YY H:M:S
     dt_string = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
-    conn = sqlite3.connect('chaindomain.db')
-    cursor=conn.cursor()
-    cursor.execute('''INSERT INTO Transaction (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)''',
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(BASE_DIR, "chaindomain.db")
+    con = sqlite3.connect(db_path)
+    cursor= con.cursor()
+    cursor.execute("INSERT INTO Transaction (sellerID,buyerID,propertyID,anzahlTokens,preisToken,datum) VALUES (?,?,?,?,?,?)",
             (sellerID,buyerID,immobilienID,anzahlTokens,preis,dt_string))
     cursor.commit
+    cursor.close()
     flash('Angebot wurde erstellt', category='success')
     return true
 

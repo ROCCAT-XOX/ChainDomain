@@ -7,29 +7,35 @@ class Note(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(10000))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    #user_id = db.Column(db.Integer, db.ForeignKey('User.id'))
 
 
 class User(db.Model, UserMixin):
+    __tablename__ = 'User'
+
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
-    notes = db.relationship('Note')
+    #notes = db.relationship('Note')
 
 class Offer(db.Model):
+    __tablename__ = 'Offer'
 
     offerId       = db.Column(db.Integer, primary_key=True)
-    UserId        = db.Column(db.Integer, unique = True)
-    PropertyId    = db.Column(db.Integer, unique = True)
-    buyOrSell     = db.Column(db.Boolean)
+    sellerID      = db.Column(db.Integer)
+    buyerID       = db.Column(db.Integer)
+    propertyID    = db.Column(db.Integer)
     anzahlTokens  = db.Column(db.Integer)
-    preisPerToken = db.Column(db.Float)
+    preisToken    = db.Column(db.Float)
+    datum         = db.Column(db.String(120))
 
     
 class Property(db.Model):
+    __tablename__ = 'Property'
+
     propertyID  	    = db.Column(db.Integer,     primary_key=True)
-    sellerID            = db.Column(db.Integer, unique = False)
+    sellerID            = db.Column(db.Integer)
     straße              = db.Column(db.String(120))
     hausnummer          = db.Column(db.String(12))
     ort                 = db.Column(db.String(120))
@@ -50,10 +56,12 @@ class Property(db.Model):
 
 
 class Transaction(db.Model):
+    __tablename__ = 'Transaction'
+
     transactionID   = db.Column(db.Integer,     primary_key=True)
-    sellerID        = db.Column(db.Integer, unique = True)
-    buyerID         = db.Column(db.Integer, unique = True)
-    propertyID      = db.Column(db.Integer, unique = True)
+    sellerID        = db.Column(db.Integer)
+    buyerID         = db.Column(db.Integer)
+    propertyID      = db.Column(db.Integer)
     anzahlTokens    = db.Column(db.Integer)
     preisToken      = db.Column(db.Float)
-    datum           = db.Column(db.DateTime)
+    datum           = db.Column(db.String(120))
