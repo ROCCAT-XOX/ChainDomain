@@ -1,9 +1,44 @@
-{% extends "base.html" %} {% block title %}Login{% endblock %} {% block content
-%}
+
+<!--break-->
+
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale">
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/login_signup.css') }}">
+
+</head>
+<body>
 <form method="POST">
-  <h3 align="center">Login</h3>
-  <div class="form-group">
-    <label for="email">Email Address</label>
+<div class="box-form" >
+	
+	
+	<div class="left">
+		<div class="overlay">
+		<h1>Chain Domain</h1>
+		<p>Einloggen und loslegen</p>
+		<span>
+			<p>Login with social media</p>
+			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-google" aria-hidden="true"></i></a>
+			
+		</span>
+		</div>
+	</div>
+	
+	
+		<div class="right">
+		<h5>Login</h5>
+		<p>Don't have an account? <a href="{{url_for('auth.sign_up')}}">Creat Your Account</a> it takes less than a minute</p>
+		<div class="inputs">
+      
     <input
       type="email"
       class="form-control"
@@ -11,9 +46,8 @@
       name="email"
       placeholder="Enter email"
     />
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
+			<br>
+			
     <input
       type="password"
       class="form-control"
@@ -21,8 +55,37 @@
       name="password"
       placeholder="Enter password"
     />
-  </div>
-  <br />
-  <button type="submit" class="btn btn-primary">Login</button>
+		</div>
+			
+			<br><br>
+			
+		<div class="remember-me--forget-password">
+				<!-- Angular -->
+	<!--
+		<label>
+		<input type="checkbox" name="item" checked/>
+		<span class="text-checkbox">Remember me</span>
+	</label>
+-->
+			<p>forgot password?</p>
+		</div>
+			
+			<br>
+			<button type="submit" class="btn btn-primary">Login</button>
+	</div>
+	
+</div>
 </form>
-{% endblock %}
+<!-- partial -->
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+

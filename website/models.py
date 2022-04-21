@@ -35,6 +35,7 @@ class Property(db.Model):
     __tablename__ = 'Property'
 
     propertyID  	    = db.Column(db.Integer,     primary_key=True)
+    name                = db.Column(db.String(120))
     sellerID            = db.Column(db.Integer)
     straße              = db.Column(db.String(120))
     hausnummer          = db.Column(db.String(12))
@@ -44,13 +45,6 @@ class Property(db.Model):
     preis               = db.Column(db.Float)
     anzahlTokens        = db.Column(db.Integer)
     verfügbareAnteile   = db.Column(db.Float)
-    #import os
-    #from flask import Flask, flash, request, redirect, url_for
-    #from werkzeug.utils import secure_filename
-    #UPLOAD_FOLDER = '/path/to/the/uploads'
-    
-    #app = Flask(__name__)
-    #app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     img                 = db.Column(db.String(300), unique = True)
     
 
@@ -65,3 +59,11 @@ class Transaction(db.Model):
     anzahlTokens    = db.Column(db.Integer)
     preisToken      = db.Column(db.Float)
     datum           = db.Column(db.String(120))
+
+class Besitz(db.Model): 
+    __tablename__ = 'Besitz'
+    besitzID        = db.Column(db.Integer, primary_key=True)
+    userID          = db.Column(db.Integer)
+    propertyID      = db.Column(db.Integer)
+    anzahlToken     = db.Column(db.Integer)
+    transactionID   = db.Column(db.Integer)

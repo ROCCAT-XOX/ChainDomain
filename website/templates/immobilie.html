@@ -1,27 +1,28 @@
-{{ from flask_session import Session}}
 {% extends "base.html" %} {% block title %}Chain deine Domain{% endblock %} {% block content
     %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/card.css') }}">
+    <div class="card">
+        <img src="{{url_for('static', filename = "images/"+for_view[11] )}}">
+        <div class="container">
+            <h4>{{for_view[12]}}</h4>
+            <h5>Preis: {{for_view[0]}}</h5>
+            <h5>Lage: {{for_view[4]}} {{for_view[5]}} {{for_view[7]}} {{for_view[6]}} </h5>
+            <h5>Gesamt Anzahl der Tokens: {{for_view[10]}}</h5>
+            <h5>Verfügbare Tokens: {{for_view[2]}}</h5>
+            <p>{{for_view[8]}}</p>
+            <h5>Verkäufer: {{for_view[1]}}</h5>
+            <h5>Original Wert: {{for_view[9]}} per Token</h5>
+            <h5>Angebots Wert: {{for_view[0]}}</h5>
+            <h5>Gesamt Tokens: {{for_view[10]}}</h5>
+            <h5>Verfügbare Tokens: {{for_view[2]}}</h5>
 
-{{ immobilienID =1, sellerID=2, VerfügbareAnteile=4999, preis=500 }}
-<!--{{session['immobilienID']=immobilienID}}
-    {{sellTokens = url_for('auth.getUserTokens')}}-->
-<form action = "{{ url_for('auth.angebotBuy') }}" method = "POST" name="buy" id="buy" enctype=multipart/form-data>
-    {{session['immobilienID']=immobilienID,
-    session['sellerID']=sellerID,
-    session['preis']=preis}}
-    <label for="auswählen">Wählen Sie die Anzahl der Tokens aus, die Sie kaufen möchten</label>
-    <input type="number" name="auswählen" id="auswählen" min="1" max="{{VerfügbareAnteile}}">
-    <label for="buy">Buy</label>
-    <button type="submit"></button>
-</form>
-
-<form action = "{{ url_for('auth.angebotSell') }}" method = "POST" name="sell" id="sell" enctype=multipart/form-data>
-    {{session['immobilienID']=immobilienID,
-    session['sellerID']=sellerID,
-    session['preis']=preis}}
-    <label for="auswählen">Wählen Sie die Anzahl der Tokens aus, die Sie verkaufen möchten</label>
-    <input type="number" name="auswählen" id="auswählen" min="1" max="{{VerfügbareAnteile}}">
-    <label for="buy">Sell</label>
-    <button type="submit"></button>
-</form>
+            <form action = "{{ url_for('auth.viewbuy') }}" method = "POST" name="kaufen" id="kaufen" enctype="multipart/form-data">
+                <h5>Menge:</h5>
+                <input type="number" id="menge_tokens" name="menge_tokens" min="1" max="{{for_view[2]}}" required><br>
+                <input type="hidden" id="offerId" name="offerId" value ="{{for_view[13]}}"required><br>
+                <button type="submit" name="submit">Erwerben</button>
+                <!--codeAddress(this.form)-->
+            </form>
+        </div>
+    </div>
 {% endblock %}

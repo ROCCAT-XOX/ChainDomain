@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block title %}Chain deine Domain{% endblock %} {% block content
+    %}
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/card.css') }}">
+    {% for off in all_off %}
+        <div class="card">
+            <img src="{{url_for('static', filename = "images/"+off[4] )}}">
+            <div class="container">
+                <h4>{{off[0]}}</h4>
+                <h5>Verkaufte Menge: {{off[1]}}</h5>
+                <h5>Verkaufspreis: {{off[2]}}</h5>
+                <h5>Eingestellt am {{off[3]}}</h5>
+                
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

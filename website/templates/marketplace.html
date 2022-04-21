@@ -1,18 +1,41 @@
 {% extends "base.html" %} {% block title %}Marketplace{% endblock %} {% block content
     %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/card.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/card.css') }}"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+    </style>
+
+
+<div class="w3-main w3-content w3-padding" style="max-width:1200px;margin-top:100px">
     {% for immo in immos %}
-        <div class="card">
-            <img src="{{url_for('static', filename = "images/"+immo[8] )}}">
-            <div class="container">
-                <h4>Villa</h4>
-                <h5>Preis: {{immo[5]}}</h5>
-                <h5>Lage: {{immo[5]}} {{immo[5]}} {{immo[5]}} {{immo[5]}} </h5>
-                <h5>Gesamt Anzahl der Tokens: {{immo[5]}}</h5>
-                <h5>Verfügbare Topkens: {{immo[5]}}</h5>
-                <p>{{immo[5]}}</p>
-            </div>
-        </div>
+    <a href="/viewbuy?offerId={{immo[9]}}"">
+
+        <div class="w3-third w3-container w3-margin-bottom">
+            <div class="card">
+                <div class ="imgcover">
+                <img class = "myimg" src="{{url_for('static', filename = "images/"+immo[8] )}}" alt="Sandwich" style="width:100%">
+                </div>
+              
+              <div class="container">
+              <h4>{{immo[10]}}</h4>
+                    <h5>Preis: {{immo[5]}} €</h5>
+                    <h5>Verfügbare Tokens: {{immo[7]}} / {{immo[6]}}</h5>
+                    <h5>Lage: {{immo[0]}} {{immo[3]}} in {{immo[2]}} {{immo[1]}} </h5>
+                    <p>{{immo[4]}}</p>
+                </div>
+                </div>
+          </div>
+
+        </a>
+        
+      
     {% endfor %}
+</div>
+
     
 {% endblock %}

@@ -1,21 +1,48 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-%}
-<h1 align="center">Notes</h1>
-<ul class="list-group list-group-flush" id="notes">
-  {% for note in user.notes %}
-  <li class="list-group-item">
-    {{ note.data }}
-    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </li>
-  {% endfor %}
-</ul>
-<form method="POST">
-  <textarea name="note" id="note" class="form-control"></textarea>
-  <br />
-  <div align="center">
-    <button type="submit" class="btn btn-primary">Add Note</button>
-  </div>
-</form>
-{% endblock %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/landingpage.css') }}">
+    <title>Landing Page </title>
+</head>
+<body >
+ 
+    <div class="container">
+        <div class="header">
+            <img src="{{url_for('static', filename='images/logo.png')}}" class="logo">
+            <nav>
+                <ul>
+                    <li><a href=""> </a></li>
+                    <li><a href=""> </a></li>
+                    <li><a href=""> </a></li>
+                    <li><a href=""> </a></li>
+                </ul>
+            </nav>
+            <a id="btn1"  href="{{url_for('auth.login')}}">Login</a>
+            <a id="btn2"  href="{{url_for('auth.sign_up')}}">Sign Up</a>
+            
+        </div>
+        <div class="content">
+            <div class="text">
+            <h1>Chain <br> <span>Domain</span></h1>
+            <p>Wir zeigen Ihnen, wie Sie Ihre Immobilien langfristig noch rentabler gestalten!<br />
+
+               Oder sie beteiligen sich an einer Immobilie, um Ihr Geld sicher und risikoarm anzulegen.
+               <br>
+               <br>Wir helfen Investoren Einstiegshürden zu überwinden, damit jeder am Markt teilhaben kann.
+               <br>
+                <br>ChainDomain. Mit und geht alles.
+            </p>
+           </div>
+        <div class="pepsi">
+        
+        </div>
+       </div>
+   </div>
+</body>
+</html>
+
+

@@ -1,29 +1,55 @@
-{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
-content %}
-<form method="POST">
-  <h3 align="center">Sign Up</h3>
-  <div class="form-group">
-    <label for="email">Email Address</label>
-    <input
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale">
+  <title>Sign Up</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"><link rel="stylesheet" href="{{ url_for('static',filename='css/login_signup.css') }}">
+
+</head>
+<body>
+
+<div class="box-form">
+	
+	<div class="left">
+		<div class="overlay">
+		<h1>Chain Domain</h1>
+		<p>Du bist einen Kilck davon ernfernt eine Welt voller Möglichkeiten zu entdecken. Melde dich an und trade wie die Großen. Mit kleinem Budge!</p>
+		<span>
+			<p>Login with social media</p>
+			<a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+			<a href="#"><i class="fa fa-google" aria-hidden="true"></i></a>
+			
+		</span>
+		</div>
+	</div>
+	
+	
+		<div class="right">
+		<h5>SingUp</h5>
+		<p>You have an account? <a href="{{url_for('auth.login')}}">Log In to your Account</a> </p>
+    <form method="POST">
+		<div class="inputs">
+      <input
       type="email"
       class="form-control"
       id="email"
       name="email"
       placeholder="Enter email"
     />
-  </div>
-  <div class="form-group">
-    <label for="firstName">First Name</label>
     <input
-      type="text"
-      class="form-control"
-      id="firstName"
-      name="firstName"
-      placeholder="Enter first name"
-    />
-  </div>
-  <div class="form-group">
-    <label for="password1">Password</label>
+    type="text"
+    class="form-control"
+    id="firstName"
+    name="firstName"
+    placeholder="Enter first name"
+  />
+			<br>
+			
     <input
       type="password"
       class="form-control"
@@ -31,18 +57,37 @@ content %}
       name="password1"
       placeholder="Enter password"
     />
-  </div>
-  <div class="form-group">
-    <label for="password2">Password (Confirm)</label>
-    <input
+            <br>
+            <input
       type="password"
       class="form-control"
       id="password2"
       name="password2"
       placeholder="Confirm password"
     />
-  </div>
-  <br />
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-{% endblock %}
+		</div>
+  
+			
+			<br><br>
+			
+		<div class="remember-me--forget-password">
+				<!-- Angular -->
+	<!--
+		<label>
+		<input type="checkbox" name="item" checked/>
+		<span class="text-checkbox">Remember me</span>
+	</label>
+-->
+			<p>forgot password?</p>
+		</div>
+			
+			<br>
+			<button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+	</div>
+	
+</div>
+<!-- partial -->
+  
+</body>
+</html>

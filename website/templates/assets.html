@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block title %}Chain deine Domain{% endblock %} {% block content
+    %}
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/card.css') }}">
+    {% for ass in assets %}
+        <div class="card">
+            <div class="container">
+                <h4>{{ass[2]}}</h4>
+                <h5>Erworben am {{ass[3]}}</h5>
+                <h5>Preis: {{ass[1]}}</h5>
+                <h5>Original Preis: {{ass[4]}}</h5>
+                <h5>Gesamt Anzahl der Tokens: {{ass[5]}}</h5>
+                <h5>Deine Tokens: {{ass[0]}}</h5>
+                <h5>Letzte Kauf {{ass[7]}}</h5>
+                <form action = "{{ url_for('auth.assets') }}" method = "POST" name="sell" id="sell" enctype="multipart/form-data">
+                    <h5>Verkaufsmenge: </h5>
+                    <input type="number" id="am_sell" name="am_sell" min="1" max="{{ass[0]}}" required> <br>
+                    <h5>Preis: </h5>
+                    <input type="number" id="price" name="price" min="1" max="10000000000" required><br>
+                    <input type="hidden" id="propId" name="propId" value ="{{ass[8]}}"required><br>
+                    <input type="hidden" id="besitzId" name="besitzId" value ="{{ass[9]}}"required><br>
+                    <button type="submit" name="submit">Verkaufen</button>
+                    <!--codeAddress(this.form)-->
+                </form>
+                
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

@@ -1,24 +1,63 @@
-{% extends "base.html" %} {% block title %}Chain deine Domain{% endblock %} {% block content
+{% extends "base.html" %} 
+
+{% block title %}Chain deine Domain{% endblock %} 
+{% block content
     %}
-<h3>Hier können Sie Ihre Immobilie tokenisieren</h3>
-<form action = "{{ url_for('auth.immobilieAnlegen') }}" method = "POST" name="tokenisieren" id="tokenisieren" enctype="multipart/form-data">
+<link rel="stylesheet" href="{{ url_for('static',filename='css/chaining.css') }}">
+<form action = "{{ url_for('auth.immobilieAnlegen') }}" method = "POST" name="tokenisieren" id="tokenisieren" enctype="multipart/form-data">    
+<div class="box-form">
+
+    <div class="left">
+        <div class="overlay">
+        <h1>Domain Chainen</h1>
+            <span>
+                <p>Hier können Sie Ihre Immobilie tokenisieren!</p>
+            </span>
+        </div>
+    </div>
+
+    <div class="right">
+        <h6>Geben Sie einfach alle nötigen Daten unten ein und im Handumdrehen wird Ihre Immobilie bei uns tokenisiert</h6>
+        
+            <div class="inputs">
+            <input class="form-control" type="text" id="name" name="name" placeholder="Name Ihrer Immobilie" required><br>
+            <input class="form-control" type="text" id="straße" name="straße" placeholder="Straße" required><br>
+            <input class="form-control" type="text" id="hausnummer" name="hausnummer" placeholder="Hausnummer" required><br>
+            <input class="form-control" type="number" id="plz" name="plz" placeholder="Postleitzahl" required><br>
+            <input class="form-control" type="text" id="ort" name="ort" placeholder="Ort" required><br>
+            <textarea class="form-control" name="beschreibung" id="beschreibung" cols="50" rows="10" form="tokenisieren" placeholder="Beschreibung Ihrer Immobilie" required></textarea><br>
+            <input class="form-control" type="number" id="preis" name="preis" step="1" min="10000" placeholder="Wert Ihrer Immobilie" required><br>
+            <input class="form-control" type="number" id="prozentanteil" name="prozentanteil" placeholder="Anzahl der Tokens, die Sie verkaufen möchten" step="1" min="1" required><br>
+            <input class="form-control" type="file" id="img" name="img" placeholder="Laden Sie ein Bild Ihrer Immobilie hoch" accept="image/*" required/>
+            <button type="submit" name="submit" aria-placeholder="Domain Chainen" class="btn btn-primary"></button>
+            </div>
+    </div>
+ </div>
+</form>
+<!--<form action = "{{ url_for('auth.immobilieAnlegen') }}" method = "POST" name="tokenisieren" id="tokenisieren" enctype="multipart/form-data">
+    <label for="name">Name Ihrer Immobilie</label><br>
+    <input type="text" id="name" name="name" required><br>
     <label for="straße">Straße</label><br>
     <input type="text" id="straße" name="straße" required><br>
     <label for="hausnummer">Hausnummer</label><br>
     <input type="text" id="hausnummer" name="hausnummer" required><br>
-    <label for="ort">Ort</label><br>
-    <input type="text" id="ort" name="ort" required><br>
     <label for="plz">Postleitzahl</label><br>
     <input type="number" id="plz" name="plz" required><br>
+    <label for="ort">Ort</label><br>
+    <input type="text" id="ort" name="ort" required><br>
     <label for="beschreibung">Beschreibung Ihrer Immobilie</label><br>
     <textarea name="beschreibung" id="beschreibung" cols="50" rows="10" form="tokenisieren" required></textarea><br>
     <label for="preis">Wert ihrer Immobilie</label><br>
     <input type="number" id="preis" name="preis" step="1" min="10000" required><br>
-    <label for="prozentanteil">Sie können 0,001-49,99% Ihrer Tokens auf dem Markt platzieren</label><br>
-    <input type="number" id="prozentanteil" name="prozentanteil" step="1" min="1" max="4999" required>Anzahl der Tokens, die Sie verkaufen möchten <br>
+    <label for="prozentanteil">Wie viele Tokens möchten Sie erstellen?</label><br>
+    <input type="number" id="prozentanteil" name="prozentanteil" step="1" min="1" required>Anzahl der Tokens, die Sie verkaufen möchten <br>
     <label for="img">Laden Sie ein Bild Ihrer Immobilie hoch</label><br>
     <input type="file" id="img" name="img" accept="image/*" required/>
     <button type="submit" name="submit">Immobilie tokenisieren</button>
-    <!--codeAddress(this.form)-->
-</form>
+    codeAddress(this.form)
+</form>-->
+
+<!--BREAK-->
+
+
 {% endblock %}
