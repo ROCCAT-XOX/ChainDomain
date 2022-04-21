@@ -1,0 +1,11 @@
+<div class="card">
+    <img src="{{url_for('static', filename = "images/"+img )}}">
+    <div class="container">
+        <h4>Villa</h4>
+        <h5>Preis: {{preis}}</h5>
+        <h5>Lage: {{straße}} {{hausnummer}} {{plz}} {{ort}} </h5>
+        <h5>Gesamt Anzahl der Tokens: {{anzahlTokens}}</h5>
+        <h5>Verfügbare Topkens: {{verfügbareAnteile}}</h5>
+        <p>{{beschreibung}}</p>
+    </div>
+</div>

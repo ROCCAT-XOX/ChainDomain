@@ -14,6 +14,32 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 auth = Blueprint('auth', __name__)
 
+@auth.route('/marketplace', methods=['GET', 'POST'])
+@login_required
+def marketplace():
+    immos = []
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(BASE_DIR, "chaindomain.db")
+    con = sqlite3.connect(db_path)
+    cursor= con.cursor()
+    collectData = '''SELECT * FROM Property'''
+    #records = cursor.fetchall()
+    for row in cursor.execute(collectData):
+        straße = row[2]
+        ort = row[4]
+        plz = row[5]
+        hausnummer = row[3]
+        beschreibung = row[6]
+        preis = row[7]
+        anzahlTokens = row[8]
+        verfügbareAnteile = row[9]
+        img = row[10]
+        immo = [straße,ort,plz,hausnummer,beschreibung,preis,anzahlTokens,verfügbareAnteile,img]
+        immos.append(immo)
+   
+    return render_template("marketplace.html",user = current_user,immos = immos)
+
+    
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
@@ -113,6 +139,8 @@ def sign_up():
 #@login_required
 #def profile():
  #   return render_template("home.html", user=current_user)
+
+
 
 @auth.route('/immobilieAnlegen', methods=['GET', 'POST'])
 #@login_required
@@ -258,6 +286,9 @@ def transaction(sellerID,buyerID,immobilienID,anzahlTokens,preis):
     cursor.close()
     flash('Angebot wurde erstellt', category='success')
     return true
+
+
+    
 
 #Real-Time-Datenbankabfrage alle 10 Sekunden
 def offerAgreement():

@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block title %}Marketplace{% endblock %} {% block content
+    %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/card.css') }}">
+    {% for immo in immos %}
+        <div class="card">
+            <img src="{{url_for('static', filename = "images/"+immo[8] )}}">
+            <div class="container">
+                <h4>Villa</h4>
+                <h5>Preis: {{immo[5]}}</h5>
+                <h5>Lage: {{immo[5]}} {{immo[5]}} {{immo[5]}} {{immo[5]}} </h5>
+                <h5>Gesamt Anzahl der Tokens: {{immo[5]}}</h5>
+                <h5>Verfügbare Topkens: {{immo[5]}}</h5>
+                <p>{{immo[5]}}</p>
+            </div>
+        </div>
+    {% endfor %}
+    
+{% endblock %}
